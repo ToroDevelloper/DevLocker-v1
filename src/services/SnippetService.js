@@ -3,7 +3,7 @@ const Snippet = require('../models/Snippet');
 const crearSnippet = async (usuarioId, datosSnippet) => {
   const { titulo, lenguaje, codigo, etiquetas } = datosSnippet;
 
-  const snippet = await Snippet.create({
+  let snippet = await Snippet.create({
     usuario: usuarioId,
     titulo,
     lenguaje,
@@ -11,11 +11,17 @@ const crearSnippet = async (usuarioId, datosSnippet) => {
     etiquetas,
   });
 
+  snippet = await snippet.populate('usuario', 'nombre');
+  snippet = snippet.toObject();
+
   return snippet;
 };
 
+
 const obtenerSnippetsUsuario = async (usuarioId) => {
-  return await Snippet.find({ usuario: usuarioId }).sort({ createdAt: -1 });
+  return await Snippet.find({ usuario: usuarioId })
+    .sort({ createdAt: -1 })
+    .populate('usuario', 'nombre');
 };
 
 const actualizarSnippet = async (usuarioId, snippetId, actualizaciones) => {
@@ -35,7 +41,9 @@ const actualizarSnippet = async (usuarioId, snippetId, actualizaciones) => {
   if (codigo !== undefined) snippet.codigo = codigo;
   if (etiquetas !== undefined) snippet.etiquetas = etiquetas;
 
-  return await snippet.save();
+  let actualizado = await snippet.save();
+  actualizado = await actualizado.populate('usuario', 'nombre');
+  return actualizado;
 };
 
 const eliminarSnippet = async (usuarioId, snippetId) => {

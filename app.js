@@ -12,7 +12,7 @@ const aplicacion = express();
 aplicacion.use(express.json());
 
 aplicacion.get('/', (req, res) => {
-  res.json({ mensaje: 'API DevLocker v1 🔐' });
+  res.json({ mensaje: 'API DevLocker v1 - Bienvenido' });
 });
 
 aplicacion.use('/api/v1/auth', rutasAuth);

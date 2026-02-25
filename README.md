@@ -36,7 +36,7 @@ npm run dev
 
 | Método | Endpoint               | Descripción       |
 | ------ | ---------------------- | ----------------- |
-| POST   | `/api/v1/auth/register` | Registrar usuario |
+| POST   | `/api/v1/auth/registro` | Registrar usuario |
 | POST   | `/api/v1/auth/login`    | Login             |
 
 ### Snippets (requieren token JWT)

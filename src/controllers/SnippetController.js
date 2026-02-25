@@ -1,7 +1,8 @@
 const manejadorAsync = require('../utils/manejadorAsync');
 const { validationResult } = require('express-validator');
-const ServicioSnippet = require('../services/servicioSnippet');
+const ServicioSnippet = require('../services/SnippetService');
 
+//POST
 const crearSnippet = manejadorAsync(async (req, res) => {
   const errores = validationResult(req);
   if (!errores.isEmpty()) {
@@ -19,6 +20,7 @@ const crearSnippet = manejadorAsync(async (req, res) => {
   });
 });
 
+//GET
 const obtenerSnippets = manejadorAsync(async (req, res) => {
   const snippets = await ServicioSnippet.obtenerSnippetsUsuario(
     req.usuario._id
@@ -31,6 +33,7 @@ const obtenerSnippets = manejadorAsync(async (req, res) => {
   });
 });
 
+//PUT
 const actualizarSnippet = manejadorAsync(async (req, res) => {
   const errores = validationResult(req);
   if (!errores.isEmpty()) {
@@ -49,6 +52,7 @@ const actualizarSnippet = manejadorAsync(async (req, res) => {
   });
 });
 
+//DELETE
 const eliminarSnippet = manejadorAsync(async (req, res) => {
   await ServicioSnippet.eliminarSnippet(req.usuario._id, req.params.id);
 

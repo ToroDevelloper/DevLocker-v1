@@ -1,12 +1,7 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
 const proteger = require('../middlewares/autenticacion');
-const {
-  crearSnippet,
-  obtenerSnippets,
-  actualizarSnippet,
-  eliminarSnippet,
-} = require('../controllers/controladorSnippet');
+const { crearSnippet, obtenerSnippets, actualizarSnippet, eliminarSnippet, } = require('../controllers/SnippetController');
 
 const enrutador = Router();
 

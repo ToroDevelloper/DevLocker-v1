@@ -1,6 +1,6 @@
 const manejadorAsync = require('../utils/manejadorAsync');
 const { validationResult } = require('express-validator');
-const ServicioAuth = require('../services/servicioAuth');
+const ServicioAuth = require('../services/AuthService');
 
 const registro = manejadorAsync(async (req, res) => {
   const errores = validationResult(req);
