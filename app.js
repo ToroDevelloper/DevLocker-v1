@@ -1,34 +1,27 @@
 require('dotenv').config();
 const express = require('express');
-const connectDB = require('./src/config/db');
-const errorHandler = require('./src/middlewares/errorHandler');
+const conectarBD = require('./src/config/basedatos');
+const manejadorErrores = require('./src/middlewares/manejadorErrores');
 
-// Rutas
-const authRoutes = require('./src/routes/authRoutes');
-const snippetRoutes = require('./src/routes/snippetRoutes');
+const rutasAuth = require('./src/routes/rutasAuth');
+const rutasSnippets = require('./src/routes/rutasSnippets');
 
-// Conectar a MongoDB
-connectDB();
+conectarBD();
 
-const app = express();
+const aplicacion = express();
+aplicacion.use(express.json());
 
-// Body parser
-app.use(express.json());
-
-// Ruta de salud
-app.get('/', (req, res) => {
-  res.json({ message: 'DevLocker API v1 🔐' });
+aplicacion.get('/', (req, res) => {
+  res.json({ mensaje: 'API DevLocker v1 🔐' });
 });
 
-// Montar rutas
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/snippets', snippetRoutes);
+aplicacion.use('/api/v1/auth', rutasAuth);
+aplicacion.use('/api/v1/snippets', rutasSnippets);
 
-// Middleware global de errores (debe ir al final)
-app.use(errorHandler);
+aplicacion.use(manejadorErrores);
 
-// Iniciar servidor
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+const PUERTO = process.env.PORT || 3000;
+aplicacion.listen(PUERTO, () => {
+  console.log(`Servidor corriendo en http://localhost:${PUERTO}`);
 });
+

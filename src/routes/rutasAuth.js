@@ -1,17 +1,13 @@
 const { Router } = require('express');
 const { body } = require('express-validator');
-const { register, login } = require('../controllers/authController');
+const { registro, login } = require('../controllers/controladorAuth');
 
-const router = Router();
+const enrutador = Router();
 
-// POST /api/v1/auth/register
-router.post(
-  '/register',
+enrutador.post(
+  '/registro',
   [
-    body('name')
-      .trim()
-      .notEmpty()
-      .withMessage('El nombre es obligatorio'),
+    body('nombre').trim().notEmpty().withMessage('El nombre es obligatorio'),
     body('email')
       .isEmail()
       .withMessage('Debe ser un email válido')
@@ -20,22 +16,19 @@ router.post(
       .isLength({ min: 6 })
       .withMessage('La contraseña debe tener al menos 6 caracteres'),
   ],
-  register
+  registro
 );
 
-// POST /api/v1/auth/login
-router.post(
+enrutador.post(
   '/login',
   [
     body('email')
       .isEmail()
       .withMessage('Debe ser un email válido')
       .normalizeEmail(),
-    body('password')
-      .notEmpty()
-      .withMessage('La contraseña es obligatoria'),
+    body('password').notEmpty().withMessage('La contraseña es obligatoria'),
   ],
   login
 );
 
-module.exports = router;
+module.exports = enrutador;

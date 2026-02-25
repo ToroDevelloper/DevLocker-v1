@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const userSchema = new mongoose.Schema(
+const esquemaUsuario = new mongoose.Schema(
   {
-    name: {
+    nombre: {
       type: String,
       required: [true, 'El nombre es obligatorio'],
       trim: true,
@@ -19,22 +19,20 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'La contraseña es obligatoria'],
       minlength: [6, 'La contraseña debe tener al menos 6 caracteres'],
-      select: false, // No devolver la contraseña en queries
+      select: false,
     },
   },
   { timestamps: true }
 );
 
-// Hash de la contraseña antes de guardar
-userSchema.pre('save', async function () {
+esquemaUsuario.pre('save', async function () {
   if (!this.isModified('password')) return;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-// Método para comparar contraseñas
-userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
+esquemaUsuario.methods.compararPassword = async function (passwordIngresada) {
+  return await bcrypt.compare(passwordIngresada, this.password);
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Usuario', esquemaUsuario);

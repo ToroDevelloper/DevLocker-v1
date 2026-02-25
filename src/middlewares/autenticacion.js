@@ -1,13 +1,8 @@
 const jwt = require('jsonwebtoken');
-const asyncHandler = require('../utils/asyncHandler');
-const User = require('../models/User');
+const manejadorAsync = require('../utils/manejadorAsync');
+const Usuario = require('../models/Usuario');
 
-/**
- * Middleware de autenticación.
- * Verifica el token JWT enviado en el header Authorization.
- * Extrae el usuario y lo coloca en req.user.
- */
-const protect = asyncHandler(async (req, res, next) => {
+const proteger = manejadorAsync(async (req, res, next) => {
   let token;
 
   if (
@@ -23,10 +18,10 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = await User.findById(decoded.id);
+    const decodificado = jwt.verify(token, process.env.JWT_SECRET);
+    req.usuario = await Usuario.findById(decodificado.id);
 
-    if (!req.user) {
+    if (!req.usuario) {
       res.status(401);
       throw new Error('No autorizado, usuario no encontrado');
     }
@@ -38,4 +33,4 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = protect;
+module.exports = proteger;

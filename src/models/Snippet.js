@@ -1,29 +1,29 @@
 const mongoose = require('mongoose');
 
-const snippetSchema = new mongoose.Schema(
+const esquemaSnippet = new mongoose.Schema(
   {
-    user: {
+    usuario: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      ref: 'Usuario',
       required: true,
     },
-    title: {
+    titulo: {
       type: String,
       required: [true, 'El título es obligatorio'],
       minlength: [3, 'El título debe tener al menos 3 caracteres'],
       trim: true,
     },
-    language: {
+    lenguaje: {
       type: String,
       trim: true,
       lowercase: true,
       default: 'text',
     },
-    code: {
+    codigo: {
       type: String,
       required: [true, 'El código es obligatorio'],
     },
-    tags: {
+    etiquetas: {
       type: [String],
       default: [],
     },
@@ -31,4 +31,4 @@ const snippetSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Snippet', snippetSchema);
+module.exports = mongoose.model('Snippet', esquemaSnippet);
