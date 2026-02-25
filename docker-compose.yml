@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: devlocker-mongo
+    ports:
+      - "27017:27017" # Puerto local : Puerto del contenedor
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin # Usuario root
+      MONGO_INITDB_ROOT_PASSWORD: secretpassword # Contraseña root
+    volumes:
+      - mongo-data:/data/db # Persistencia de datos
+
+volumes:
+  mongo-data: # Volumen nombrado para persistencia
